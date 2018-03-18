@@ -72,7 +72,7 @@
         audio.onended = function () {
             i++;
             if (i < len) {
-                audio.src = "speech/" + playlist[i] + ".mp3";
+                audio.src = "http://zmz5725.gitee.io/driving_simulation_of_lighting_application/speech/" + playlist[i] + ".mp3";
                 setTimeout(function () {
                     if (i == len - 1) {
                         btn.textContent = "模拟练习即将结束...";
@@ -86,7 +86,7 @@
                 btn.disabled = false;
             }
         };
-        audio.src = "speech/" + playlist[i] + ".mp3";
+        audio.src = "http://zmz5725.gitee.io/driving_simulation_of_lighting_application/speech/" + playlist[i] + ".mp3";
         audio.play();
     }
 
