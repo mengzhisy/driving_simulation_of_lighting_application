@@ -6,35 +6,113 @@
 </head>
 
 <body>
- <audio id="player">
- </audio>
+<audio id="player"></audio>
+<form name="settings">
+    <label for="sim_sum">模拟灯光数量（个）: </label>
+    <input type="number" name="sim_sum" id="sim_sum" value="8"/>
+    <label for="sim_sum">语音时间间隔（秒）: </label>
+    <input type="number" name="interval" id="interval" value="4"/>
+</form>
+<button id="btn" class="btn" onclick="start()">开始练习</button>
 </body>
 
+<footer style="font-size: 6px;margin-top: 60px;">
+    <p>Authored by: 张猛治</p>
+</footer>
 
 <script>
 
     var audio = document.getElementById("player");
-    start();
+    var btn = document.getElementById("btn");
 
     function start() {
-        var i = 0;
-        var playlist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        var sim_sum = settings.sim_sum.value; //模拟数量
+        var interval = settings.interval.value; //间隔时间
+        console.log("模拟数量:" + sim_sum);
+        console.log("间隔时间:" + interval);
+        if (sim_sum < 0 || sim_sum > 50) {
+            alert("模拟灯光数量必须介于0 ~ 50");
+            return;
+        }
+        if (interval < 0 || interval > 6) {
+            alert("模拟灯光数量必须介于0 ~ 6");
+            return;
+        }
+
+
+        btn.disabled = true;
+        btn.textContent = "即将开始模拟...";
+
+        var playlist = [1];
+
+        for (var i = 1; i <= sim_sum; i++) {
+            var ok = false;
+            while (!ok) {
+                ok = true;
+                var tmp = Math.floor(10 * Math.random()) % 8 + 2; // 0 1 2 3 4 5 6 7 => 2 3 4 5 6 7 8 9
+                for (var j = i - 1; j >= 1 && j >= i - 5; j--) { //与前五个都不相同
+                    if (tmp == playlist[j]) {
+                        ok = false;
+                        break;
+                    }
+                }
+                if (ok) {
+                    playlist.push(tmp);
+                }
+            }
+        }
+        playlist.push(10);
+
+        i = 0;
+
+        console.log(playlist);
 
         var len = playlist.length;
 
-        audio.onended = function() {
+        audio.onended = function () {
             i++;
-            if(i < len) {
+            if (i < len) {
                 audio.src = "speech/" + playlist[i] + ".mp3";
-                //alert("音频播放完成");
-                audio.play();
+                setTimeout(function () {
+                    if (i == len - 1) {
+                        btn.textContent = "模拟练习即将结束...";
+                    } else {
+                        btn.textContent = "正在播报语音 " + i + "/" + sim_sum;
+                    }
+                    audio.play();
+                }, interval * 1000);
             } else {
-
+                btn.textContent = "开始练习";
+                btn.disabled = false;
             }
         };
         audio.src = "speech/" + playlist[i] + ".mp3";
         audio.play();
     }
+
 </script>
+
+
+<style type="text/css">
+    .btn {
+        width: 100%;
+        height: 50px;
+        font-size: 30px;
+        border-radius: 5px;
+        border: 1px solid #2576A8;
+        background: -webkit-linear-gradient(top, #66B5E6, #2e88c0);
+        background: -moz-linear-gradient(top, #66B5E6, #2e88c0);
+        background: linear-gradient(top, #66B5E6, #2e88c0);
+        background: -ms-linear-gradient(top, #66B5E6, #2e88c0);
+    }
+
+    input {
+        margin-bottom: 20px;
+        margin-top: 8px;
+        height: 40px;
+        font-size: 25px;
+        width: 100%;
+    }
+</style>
 
 </html>
