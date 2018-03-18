@@ -1,1 +1,40 @@
-nihao
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>科目三模拟灯光练习系统</title>
+</head>
+
+<body>
+ <audio id="player">
+ </audio>
+</body>
+
+
+<script>
+
+    var audio = document.getElementById("player");
+    start();
+
+    function start() {
+        var i = 0;
+        var playlist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+        var len = playlist.length;
+
+        audio.onended = function() {
+            i++;
+            if(i < len) {
+                audio.src = "speech/" + playlist[i] + ".mp3";
+                //alert("音频播放完成");
+                audio.play();
+            } else {
+
+            }
+        };
+        audio.src = "speech/" + playlist[i] + ".mp3";
+        audio.play();
+    }
+</script>
+
+</html>
