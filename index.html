@@ -10,7 +10,7 @@
 <form name="settings">
     <label for="sim_sum" style="font-size: 40px;">模拟灯光数量（个）: </label>
     <input type="number" name="sim_sum" id="sim_sum" value="16"/>
-    <label for="sim_sum" style="font-size: 40px;">语音时间间隔（秒）: </label>
+    <label for="interval" style="font-size: 40px;">语音时间间隔（秒）: </label>
     <input type="number" name="interval" id="interval" value="3"/>
 </form>
 <button id="btn" class="btn" onclick="start()">开始练习</button>
@@ -35,7 +35,7 @@
             return;
         }
         if (interval < 0 || interval > 6) {
-            alert("模拟灯光数量必须介于0 ~ 6");
+            alert("语音时间间隔必须介于0 ~ 6");
             return;
         }
 
